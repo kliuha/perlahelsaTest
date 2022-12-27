@@ -1,11 +1,13 @@
 <template>
   <div class="app">
     <TheHeader />
+    <TheMain />
   </div>
 </template>
 
 <style lang="scss">
-.app {
+body {
+  min-height: 100vh;
   background: linear-gradient(180deg, rgba(200, 224, 149, 0.8) -5.17%, rgba(221, 238, 239, 0.8) 47.96%, rgba(255, 255, 255, 0.8) 100%);
 }
 </style>
