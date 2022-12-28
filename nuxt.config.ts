@@ -7,5 +7,16 @@ export default defineNuxtConfig({
     plugins: [
       eslintPlugin()
     ]
-  }
+  },
+  modules: [
+    [
+      "@pinia/nuxt",
+      {
+        autoImports: [
+          "defineStore",
+          ["defineStore", "definePiniaStore"]
+        ]
+      }
+    ]
+  ]
 })

@@ -1,5 +1,5 @@
 <template>
-  <header class="header position-fixed fixed-top">
+  <header ref="header" class="header position-fixed fixed-top">
     <div class="header__sale-block align-items-center d-flex container-fluid justify-content-center">
       <p class="header__sale-block-text d-flex align-items-center">
         Безкоштовна доставка від 1800 грн
@@ -13,24 +13,21 @@
               <use href="/img/sprite-header.svg#burger" />
             </svg>
           </a>
-          <!-- <img class="main-header__img search-img" src="/img/search.svg" alt="Search icon" width="24"> -->
           <svg class="main-header__img search-img" width="24" height="24" viewBox="0 0 30 24">
             <use href="/img/sprite-header.svg#search" />
           </svg>
         </div>
         <h1><img class="main-header__img logo-img" src="/img/logo.svg" alt="Perla Helsa logo" width="196"></h1>
         <div class="d-flex align-items-center">
-          <!-- <img class="main-header__img call-img" src="/img/call.svg" alt="Call icon" width="24"> -->
           <svg class="main-header__img call-img" width="24" height="24" viewBox="0 0 30 24">
             <use href="/img/sprite-header.svg#call" />
           </svg>
           <div class="main-header__cart-block position-relative">
-            <!-- <img class="main-header__img cart-img" src="/img/cart.svg" alt="Shoping cart"> -->
             <svg class="main-header__img cart-img" width="27" height="25" viewBox="0 0 30 24">
               <use href="/img/sprite-header.svg#cart" />
             </svg>
             <div class="main-header__cart-count-block d-flex justify-content-center align-items-center position-absolute">
-              0
+              {{ store.getCount }}
             </div>
           </div>
         </div>
@@ -61,6 +58,29 @@
 </template>
 
 <script setup>
+import { useCartStore } from "@/stores/cart"
+const store = useCartStore()
+const header = ref(null)
+
+if (process.client) {
+  window.addEventListener("scroll", function () {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop// текущая позиция скролла
+    const scrollHeight = Math.max(
+      document.body.scrollHeight, document.documentElement.scrollHeight,
+      document.body.offsetHeight, document.documentElement.offsetHeight,
+      document.body.clientHeight, document.documentElement.clientHeight
+    ) - innerHeight
+    const percent = scrollTop / scrollHeight
+    if (percent > 0.4) {
+      header.value.classList.add("header--scrolling")
+    } else {
+      header.value.classList.remove("header--scrolling")
+    }
+  })
+}
+// function addToCart() {
+
+// }
 </script>
 
 <style lang="scss" scoped>
@@ -102,6 +122,8 @@
   display: flex;
   color: #FFFFFF;
   font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
   margin-bottom: 0;
   &::before, &::after{
     content: "";
@@ -145,10 +167,13 @@
   color: #1D1D1B;
   font-size: 23px;
   line-height: 29.32px;
-  font-weight: 400;
   transition: color 0.3s;
   &:hover{
     color: #797973;
   }
+}
+.header--scrolling {
+  transition: 0.2s;
+  background: #FFFFFF;
 }
 </style>
