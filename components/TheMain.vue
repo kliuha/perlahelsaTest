@@ -1,9 +1,9 @@
 <template>
   <main class="main">
-    <div class="container">
+    <div class="section__container">
       <div class="product d-flex justify-content-between">
         <div class="product__desc">
-          <h2 class="product__name d-flex align-items-center">
+          <h2 class="product__name d-flex">
             <span class="product__name-title fw-bolder">Омега-3 <span class="product__name-span fst-italic">Тріска</span></span> <span class="product__name-vitamins d-flex justify-content-center align-items-center">з вітамінами А і D3</span>
           </h2>
           <div class="product__desc-tabs position-relative">
@@ -16,9 +16,12 @@
             <input id="application" class="product__desc-tabs-input" type="radio" name="product-tabs">
             <label class="product__desc-tabs-label d-inline-block" for="application">Спосіб застосування</label>
             <div id="desc-content" class="product__tabs-content product__tabs-content-desc">
-              <p class="product__tabs-content-desc-text">
-                Комплекс EPA + DHA кислот і натуральних вітамінів А & D3 для здоров'я твоєї шкіри, волосся, зору, сну, міцних кісток, суглобів та імунітету.
+              <p ref="description" class="product__tabs-content-desc-text">
+                Комплекс EPA + DHA кислот і натуральних вітамінів А & D3 для здоров'я твоєї шкіри<span class="comma">,</span> волосся, зору, сну, міцних кісток, суглобів та імунітету.
               </p>
+              <button ref="learnMoreButton" class="learn-more" @click="showFullDesc">
+                Дізнатись більше
+              </button>
             </div>
             <div id="benefits-content" class="product__tabs-content product__tabs-content-benefits">
               <ul class="benefits-list">
@@ -100,7 +103,7 @@
                 1 місяць прийому
               </p>
             </div>
-            <div class="product-price__block d-flex align-items-center">
+            <div class="product-price__block align-items-center">
               <p class="last-price product-price position-relative">
                 963 ₴
               </p>
@@ -110,11 +113,11 @@
             </div>
           </div>
           <div class="add-to-cart__block d-flex justify-content-between">
-            <div class="count-product d-flex align-items-center">
+            <div class="count-product align-items-center">
               <button class="minus d-inline-block" @click="changeCount('minus')" /><span class="count-span d-flex justify-content-center align-items-center">{{ itemCount }}</span><button class="plus d-inline-block" @click="changeCount('plus')" />
             </div>
             <button class="add-to-cart-btn d-block" @click="store.increment(itemCount)">
-              До кошика
+              До кошика <span class="btn-product-price">- 489 ₴</span>
             </button>
           </div>
         </div>
@@ -129,6 +132,8 @@
 import { useCartStore } from "@/stores/cart"
 const store = useCartStore()
 const itemCount = ref(1)
+const description = ref()
+const learnMoreButton = ref()
 
 function changeCount (operation) {
   if (operation === "plus") {
@@ -137,16 +142,68 @@ function changeCount (operation) {
     itemCount.value--
   }
 }
+function showFullDesc () {
+  if (description.value.style.display === "-webkit-box") {
+    description.value.style.display = "block"
+    description.value.style.height = "100%"
+  } else {
+    description.value.style.display = "-webkit-box"
+    description.value.style.height = "42px"
+  }
+}
 </script>
 <style lang="scss" scoped>
 .main{
-    margin-top: 236px;
+  @media screen and (max-width: 767px){
+    margin-top: 127px;
+  }
+  @media screen and (min-width: 768px){
+    margin-top: 223px;
+  }
+  @media screen and (min-width: 1400px){
+    margin-top: 235px;
+  }
+}
+.product-price__block,
+.count-product{
+  display: flex;
+  @media screen and (max-width: 767px){
+    display: none;
+  }
+}
+.btn-product-price{
+  @media screen and (min-width: 768px){
+    display: none;
+  }
 }
 .product{
-    padding: 64px 0;
+  @media screen and (max-width: 767px){
+    padding: 44px 0 32px;
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+  @media screen and (min-width: 768px){
+    padding: 5px 0 56px;
+    flex-direction: column-reverse;
+  }
+  @media screen and (max-width: 1399px){
+    align-items: center;
+  }
+  @media screen and (min-width: 1400px){
+    padding: 64px 0 121px;
+    flex-direction: row;
+  }
 }
 .product__desc{
-  width: 634px;
+  @media screen and (max-width: 767px){
+    width: 100%;
+  }
+  @media screen and (min-width: 768px){
+    width: 100%;
+  }
+  @media screen and (min-width: 1400px){
+    width: 634px;
+  }
 }
 .product__tabs-content{
   display: none;
@@ -155,23 +212,48 @@ function changeCount (operation) {
   &::after{
     content: '';
     display: block;
-    width: 574px;
     height: 1px;
     background: rgb(0, 40, 79, 0.4);
     position: absolute;
+    @media screen and (max-width: 767px){
+    width: 100%;
+    top: 29px;
+  }
+  @media screen and (min-width: 768px){
+    width: 100%;
+    top: 33px;
+  }
+  @media screen and (min-width: 1400px){
+    width: 597px;
     top: 34px;
+  }
   }
 }
 .product__desc-tabs-label{
     text-transform: uppercase;
-    font-size: 17px;
     font-weight: 700;
-    line-height: 21.67px;
     padding-bottom: 8px;
     opacity: 0.4;
     cursor: pointer;
+    @media screen and (max-width: 767px){
+        font-size: 11px;
+        line-height: 14.02px;
+  }
+  @media screen and (min-width: 768px){
+    letter-spacing: 0.03em;
+    font-size: 17px;
+    line-height: 21.67px;
+  }
     &:not(:last-of-type){
-        margin-right: 40px;
+      @media screen and (max-width: 767px){
+        margin-right: 29px;
+  }
+  @media screen and (min-width: 768px){
+    margin-right: 73.7px;
+  }
+  @media screen and (min-width: 1400px){
+    margin-right: 40px;
+  }
     }
   }
 
@@ -191,44 +273,95 @@ function changeCount (operation) {
   align-self:flex-end;
 }
 .product__tabs-content {
-  margin-top: 30px;
+  margin-top: 12px;
 }
 .product__name{
     color: #00284F;
+    @media screen and (max-width: 767px){
+    margin-bottom: 24px;
+    flex-direction: column;
+    align-items: start;
+  }
+  @media screen and (min-width: 768px){
     margin-bottom: 32px;
+    flex-direction: row;
+    align-items: center;
+  }
 }
 .product__name-title{
+    @media screen and (max-width: 767px){
+    font-size: 25px;
+    line-height: 31.87px;
+    font-weight: 700;
+  }
+  @media screen and (min-width: 768px){
     margin-right: 24px;
     font-size: 40px;
+    line-height: 48px;
+    font-weight: 500;
+  }
+  @media screen and (min-width: 1400px){
     line-height: 51px;
     font-weight: 700;
+  }
 }
 .product__name-vitamins{
     border-radius: 50px;
-    width: 306px;
-    height: 38px;
     background: #FFFFFF;
+    @media screen and (max-width: 767px){
+      width: 186px;
+    height: 24px;
+    font-size: 16px;
+    line-height: 20.4px;
+    padding: 2px 19px;
+    margin-top: 4px;
+  }
+  @media screen and (min-width: 768px){
+    width: 258px;
+    height: 32px;
     font-size: 22px;
     line-height: 22px;
+    padding: 5px 24px;
+  }
+  @media screen and (min-width: 1400px){
+    width: 306px;
+    height: 38px;
+    padding: 10px 12px;
+  }
 }
 .product__name-span{
   font-family: 'Piazolla';
   font-weight: 500;
-  line-height: 56.8px;
+  @media screen and (max-width: 767px){
+    line-height: 35.5px;
+  }
+  @media screen and (min-width: 768px){
+    line-height: 56.8px;
+  }
 }
 .vitamins-desc-block{
   width: 100%;
-  margin-top: 56px;
   &::before{
     content: '';
     display: block;
-    width: 43px;
-    height: 44px;
+    flex-shrink: 0;
     background: url('/img/foil.svg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    @media screen and (max-width: 767px){
+    width: 40px;
+    height: 42px;
+    margin-right: 26px;
+  }
+  @media screen and (min-width: 768px){
+    width: 43px;
+    height: 44px;
     margin-right: 32px;
+  }
+  }
+  @media screen and (max-width: 767px){
+    justify-content: center;
   }
   p,
   strong{
@@ -238,13 +371,59 @@ function changeCount (operation) {
   .vitamins-desc-block__text{
     opacity: 50%;
   }
+  @media screen and (max-width: 767px){
+    margin-top: 32px;
+  }
+  @media screen and (min-width: 768px){
+    margin-top: 44px;
+  }
+  @media screen and (min-width: 1400px){
+    margin-top: 56px;
+  }
+}
+.product__tabs-content-desc-text{
+  @media screen and (max-width: 767px){
+    height: 42px;
+    margin-bottom: 8px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+  .three-points{
+    @media screen and (max-width: 767px){
+    display: inline;
+    }
+  }
+  .comma{
+    @media screen and (max-width: 767px){
+    display: none;
+    }
+  }
+}
+.learn-more{
+  display: none;
+  background-color: transparent;
+  padding: 0;
+  font-size: 14px;
+  line-height: 18.04px;
+  font-weight: 500;
+  padding-bottom: 4px;
+  border: none;
+  border-bottom: 1.5px solid #1D1D1B;
+  opacity: 100%;
+  transition: all 0.3s;
+  @media screen and (max-width: 767px){
+    display: block;
+  }
+  &:hover,
+  &:focus{
+    cursor: pointer;
+    opacity: 60%;
+  }
 }
 .last-price{
-    font-size: 28px;
-    line-height: 36px;
     font-weight: 900;
-    letter-spacing: -0.03em;
-    margin-right: 30px;
     color: rgba(0, 40, 79, 0.3);
     &::before{
       content: '';
@@ -256,15 +435,39 @@ function changeCount (operation) {
   background:  #00284F;
   transform: matrix(0.99, 0.25, -0.11, 0.99, 0, 0);
     }
+    @media screen and (min-width: 768px){
+      font-size: 28px;
+    line-height: 35.7px;
+    letter-spacing: -0.03em;
+    margin-right: 18px;
+  }
+  @media screen and (min-width: 1400px){
+    margin-right: 30px;
+  }
   }
   .product-price__block{
-    margin-left: 162px;
+  @media screen and (min-width: 768px){
+    font-size: 28px;
+    line-height: 35.7px;
+    letter-spacing: -0.03em;
+    margin-left: 218px;
+  }
+  @media screen and (min-width: 1400px){
+    line-height: 36px;
+    font-weight: 900;
+    margin-left: 154px;
+  }
   }
   .new-price{
     font-weight: 700;
-    font-size: 40px;
-    line-height: 51px;
     color: #00284F;
+    @media screen and (min-width: 768px){
+      font-size: 40px;
+    line-height: 48px;
+  }
+  @media screen and (min-width: 1400px){
+    line-height: 51px;
+  }
   }
   .count-product{
     .count-span{
@@ -277,7 +480,15 @@ function changeCount (operation) {
     }
   }
   .add-to-cart__block{
+    @media screen and (max-width: 767px){
+      margin-top: 24px;
+  }
+  @media screen and (min-width: 768px){
+    margin-top: 40px;
+  }
+  @media screen and (min-width: 1400px){
     margin-top: 69px;
+  }
   }
   .minus{
     margin-right: 17px;
@@ -301,14 +512,26 @@ function changeCount (operation) {
     background-color: #69C522;
     border-radius: 40px;
     color: #fff;
-    font-size: 18px;
-    line-height: 27px;
-    padding: 15px 173px 14px;
     text-align: center;
     transition: all 0.5s;
     &:hover{
       background-color: #1a25a6;
     }
+    @media screen and (max-width: 767px){
+    width: 100%;
+    padding: 17px 100px 18px;
+    font-size: 18px;
+    line-height: 22.95px;
+  }
+  @media screen and (min-width: 768px){
+    padding: 17px 150px 16px;
+    font-size: 18px;
+    line-height: 23px;
+  }
+  @media screen and (min-width: 1400px){
+    padding: 15px 173px 14px;
+    line-height: 27px;
+  }
   }
   .ingridients-table{
     tr{
@@ -323,5 +546,8 @@ function changeCount (operation) {
   .ingridients-table__ing-desc{
     color: #335371;
     opacity: 80%;
+  }
+  .three-points{
+    display: none;
   }
 </style>

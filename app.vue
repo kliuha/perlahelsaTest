@@ -52,8 +52,33 @@ body {
   background: linear-gradient(180deg, rgba(200, 224, 149, 0.8) -5.17%, rgba(221, 238, 239, 0.8) 47.96%, rgba(255, 255, 255, 0.8) 100%);
   font-family: 'Onest';
   font-weight: 400;
-  font-size: 18px;
-  line-height: 28px;
   color: #00284F;
+  @media screen and (max-width: 767px){
+    font-size: 16px;
+    line-height: 21px;
+  }
+  @media screen and (min-width: 768px){
+    font-size: 18px;
+    line-height: 26px;
+  }
+  @media screen and (min-width: 1400px){
+    line-height: 28px;
+  }
+}
+.section__container {
+  margin: 0 auto;
+  @media screen and (max-width: 767px){
+    width: 384px;
+  }
+  @media screen and (min-width: 768px){
+    width: 696px;
+  }
+  @media screen and (min-width: 1400px){
+  width: 1296px;
+  }
+}
+h1, h2, h3, h4, h5, h6, p, ul{
+    margin: 0;
+    padding: 0;
 }
 </style>
